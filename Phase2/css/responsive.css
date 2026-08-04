@@ -1,0 +1,119 @@
+/* ======================================================
+   LARGE DESKTOP (1200px)
+====================================================== */
+
+@media (min-width:1200px){
+
+    #resultsContainer,
+    #myListContainer{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+}
+
+
+/* ======================================================
+   TABLET (992px)
+====================================================== */
+
+@media (max-width:992px){
+
+    .header{
+        padding:18px 25px;
+    }
+
+    .logo{
+        font-size:30px;
+    }
+
+    .search-section h1{
+        font-size:40px;
+    }
+
+    .search-box input{
+        width:100%;
+    }
+
+    #resultsContainer,
+    #myListContainer{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+/* ======================================================
+   MOBILE (768px)
+====================================================== */
+
+@media (max-width:768px){
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .search-section{
+        padding:50px 20px;
+    }
+
+    .search-section h1{
+        font-size:32px;
+    }
+
+    .search-section p{
+        font-size:15px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box input,
+    #searchBtn,
+    #myListBtn{
+        width:100%;
+    }
+
+    #resultsContainer,
+    #myListContainer{
+        grid-template-columns:1fr;
+    }
+
+    .results-section,
+    .my-list{
+        padding:20px;
+    }
+
+}
+
+
+/* ======================================================
+   SMALL MOBILE (480px)
+====================================================== */
+
+@media (max-width:480px){
+
+    .logo{
+        font-size:26px;
+    }
+
+    .search-section h1{
+        font-size:28px;
+    }
+
+    .book-card h3{
+        font-size:18px;
+    }
+
+    #myListBtn{
+        width:100%;
+    }
+
+}

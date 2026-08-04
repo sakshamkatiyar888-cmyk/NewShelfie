@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Shelfie - Book Finder</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo" id="homeBtn">
+            📚 <span>Shelfie</span>
+        </div>
+
+        <button id="myListBtn">
+            My List (<span id="bookCount">0</span>)
+        </button>
+
+    </header>
+
+    <main class="container">
+
+        <!-- ================= HOME VIEW ================= -->
+
+        <div id="homeView">
+
+            <!-- Search Section -->
+            <section class="search-section">
+
+                <h1>Search Your Favourite Books</h1>
+
+                <p>
+                    Discover millions of books using the Open Library API.
+                </p>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search books..."
+                    />
+
+                    <button id="searchBtn">
+                        Search
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- Search Results -->
+            <section class="results-section">
+
+                <h2>Search Results</h2>
+
+                <div id="resultsContainer">
+
+                    <p class="empty">
+                        Search books to see results.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- ================= MY LIST VIEW ================= -->
+
+        <div id="myListView">
+
+            <section class="my-list">
+
+                <h2>My List</h2>
+
+                <div id="myListContainer">
+
+                    <p class="empty">
+                        No books added yet.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Main JS Entry -->
+    <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>

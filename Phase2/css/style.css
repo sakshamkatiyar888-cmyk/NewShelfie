@@ -1,0 +1,809 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Segoe UI",sans-serif;
+    background:#f8fafc;
+    color:#0f172a;
+    line-height:1.6;
+    padding-bottom:50px;
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+}
+
+ul{
+    list-style:none;
+}
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+}
+.header{
+    position:sticky;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 60px;
+
+    background:#fff;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:38px;
+    font-weight:700;
+
+    color:#2563eb;
+
+    cursor:pointer;
+}
+
+.logo span{
+    color:#2563eb;
+}
+#searchBtn,
+#myListBtn,
+.my-list-btn{
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+#searchBtn:hover,
+#myListBtn:hover,
+.my-list-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.35);
+
+}
+
+#searchBtn:active,
+#myListBtn:active,
+.my-list-btn:active{
+
+    transform:scale(.96);
+
+}
+.search-section{
+
+    margin-top:35px;
+
+    padding:80px 30px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #dbeafe 0%,
+        #f8fafc 65%
+    );
+
+}
+
+.search-section h1{
+
+    margin-bottom:12px;
+
+    font-size:52px;
+
+    font-weight:700;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+    background-clip: text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+}
+
+.search-section p{
+
+    margin-bottom:35px;
+
+    color:#64748b;
+
+    font-size:18px;
+
+}
+
+
+/* ======================================================
+   SEARCH BOX
+====================================================== */
+
+.search-box{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.search-box input{
+
+    width:600px;
+
+    max-width:100%;
+
+    height:60px;
+
+    padding:0 20px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#fff;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+
+    font-size:17px;
+
+    transition:.3s;
+
+}
+
+.search-box input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+.search-box input:focus{
+
+    outline:none;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 0 4px rgba(37,99,235,.18);
+
+}
+/* ======================================================
+   RESULTS & MY LIST
+====================================================== */
+
+.results-section,
+.my-list{
+
+    margin-top:40px;
+
+    margin-bottom:40px;
+
+    padding:35px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 8px 25px rgba(15,23,42,.06);
+
+}
+
+.results-section h2,
+.my-list h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.results-section h2::before{
+    content:"📚";
+}
+
+.my-list h2::before{
+    content:"❤️";
+}
+
+
+/* ======================================================
+   BOOK GRID
+====================================================== */
+
+#resultsContainer,
+#myListContainer{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(260px,1fr));
+
+    gap:28px;
+
+    align-items:stretch;
+
+}
+
+#myListContainer{
+    min-height:220px;
+}
+
+
+/* ======================================================
+   BOOK CARD
+====================================================== */
+
+.book-card{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border:1px solid #edf2f7;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    animation:
+    fadeUp .45s ease;
+
+}
+
+.book-card:hover{
+
+    transform:
+    translateY(-10px);
+
+    box-shadow:
+    0 20px 45px rgba(15,23,42,.15);
+
+}
+
+.book-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:18px;
+
+    padding:1px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(37,99,235,.25),
+        rgba(59,130,246,0)
+    );
+     mask:
+     linear-gradient(#fff 0 0) content-box,
+     linear-gradient(#fff 0 0);
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+
+    mask-composite:exclude;
+
+    pointer-events:none;
+
+}
+
+
+/* ======================================================
+   BOOK IMAGE
+====================================================== */
+
+.book-card img{
+
+    width:100%;
+
+    height:360px;
+
+    object-fit:cover;
+
+    background:#eef2f7;
+
+    transition:
+    transform .45s ease;
+
+}
+
+.book-card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+
+/* ======================================================
+   BOOK CONTENT
+====================================================== */
+
+.book-card-content{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:18px;
+
+}
+
+.book-card h3{
+
+    margin-bottom:12px;
+
+    min-height:56px;
+
+    overflow:hidden;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    line-height:1.4;
+
+    color:#0f172a;
+
+    display:-webkit-box;
+
+    -webkit-box-orient:vertical;
+    line-clamp: 2;
+    -webkit-line-clamp:2;
+
+}
+
+.book-card p{
+
+    margin-bottom:8px;
+
+    min-height:22px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.book-card small{
+
+    margin-bottom:18px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+}
+
+
+/* ======================================================
+   CARD BUTTONS
+====================================================== */
+
+.my-list-btn,
+.remove-btn{
+
+    margin-top:auto;
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:
+    transform .25s,
+    box-shadow .25s,
+    background .25s;
+
+}
+
+.my-list-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+}
+
+.my-list-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 20px rgba(37,99,235,.35);
+
+}
+
+.remove-btn{
+
+    background:#ef4444;
+
+}
+
+.remove-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#dc2626;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,.12);
+
+}
+/* ======================================================
+   EMPTY STATE
+====================================================== */
+
+.empty{
+
+    grid-column:1/-1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:70px 20px;
+
+    text-align:center;
+
+    background:#fff;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:18px;
+
+    color:#64748b;
+
+    font-size:18px;
+
+}
+
+.empty::before{
+
+    content:"📚";
+
+    font-size:55px;
+
+}
+
+
+/* ======================================================
+   LOADING
+====================================================== */
+
+.loading{
+
+    grid-column:1/-1;
+
+    padding:60px;
+
+    text-align:center;
+
+}
+
+.spinner{
+
+    width:50px;
+
+    height:50px;
+
+    margin:auto;
+
+    border:5px solid #dbeafe;
+
+    border-top-color:#2563eb;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+
+/* ======================================================
+   ERROR STATE
+====================================================== */
+
+.error-state{
+
+    grid-column:1/-1;
+
+    padding:60px 20px;
+
+    text-align:center;
+
+}
+
+.error-state h3{
+
+    margin-bottom:10px;
+
+    color:#1e293b;
+
+}
+
+.error-state p{
+
+    color:#64748b;
+
+}
+
+
+/* ======================================================
+   TOAST
+====================================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    z-index:9999;
+
+    padding:16px 24px;
+
+    border-radius:12px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-weight:600;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.18);
+
+    animation:toastIn .35s ease;
+
+}
+
+
+/* ======================================================
+   ANIMATIONS
+====================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes toastIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ======================================================
+   SCROLLBAR
+====================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f5f9;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1d4ed8;
+
+}
+/* ======================================================
+   HOME & MY LIST VIEW
+====================================================== */
+
+#homeView{
+    display:block;
+}
+
+#myListView{
+    display:none;
+}
+
+
+/* ======================================================
+   UTILITIES
+====================================================== */
+
+.logo{
+    cursor:pointer;
+}
+
+.my-list{
+    scroll-margin-top:100px;
+}
+
+.added-btn{
+
+    margin-top:auto;
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:not-allowed;
+
+    opacity:.9;
+
+}
