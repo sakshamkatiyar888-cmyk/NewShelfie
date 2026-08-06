@@ -1,0 +1,51 @@
+.my-list {
+  width: min(1200px, 90%);
+  margin: 4rem auto;
+  scroll-margin-top: 100px;
+}
+
+.my-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+
+
+.my-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 280px));
+  gap: 1.5rem;
+  justify-content: start;
+}
+
+@media (max-width: 768px) {
+  .my-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stats {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

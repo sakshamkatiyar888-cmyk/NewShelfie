@@ -1,0 +1,19 @@
+.hero {
+  width: min(1200px, 90%);
+  margin: 3rem auto 2rem;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #6b7280;
+}

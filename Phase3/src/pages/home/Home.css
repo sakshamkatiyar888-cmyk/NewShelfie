@@ -1,0 +1,29 @@
+.results-info {
+  width: min(1200px, 90%);
+  margin: 1rem auto;
+
+  color: #475569;
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  cursor: pointer;
+
+  transition: transform .25s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+.logo-icon {
+  transition: transform .25s ease;
+}
+
+.logo:hover .logo-icon {
+  transform: rotate(-10deg);
+}
