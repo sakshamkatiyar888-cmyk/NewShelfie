@@ -1,0 +1,74 @@
+.book-details {
+  width: min(1100px, 90%);
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.back-btn {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.details-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.details-cover {
+  width: 280px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.details-info {
+  flex: 1;
+}
+
+.details-info h1 {
+  margin-bottom: 1rem;
+}
+
+.book-description {
+  margin: 1rem 0;
+  line-height: 1.8;
+}
+
+.subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.subject-tag {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--text);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .details-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-cover {
+    width: 220px;
+  }
+
+  .details-info {
+    width: 100%;
+  }
+}
