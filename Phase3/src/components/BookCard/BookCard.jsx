@@ -1,5 +1,12 @@
 import "./BookCard.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  startReading,
+  markAsFinished,
+  markAsUnread,
+} from "../../redux/slices/librarySlice";
+import { updateReadingStreak } from "../../redux/slices/streakSlice";
 
 function BookCard({
   book,
@@ -8,6 +15,7 @@ function BookCard({
   onButtonClick,
 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const cover = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
@@ -16,26 +24,34 @@ function BookCard({
   const isAdded = buttonText === "✓ Added";
 
   const handleNavigate = () => {
-    navigate(
-      `/book/${encodeURIComponent(book.key)}`,
-      {
-        state: {
-          book,
-        },
-      }
-    );
+    navigate(`/book/${encodeURIComponent(book.key)}`, {
+      state: { book },
+    });
+  };
+
+  const handleStartReading = () => {
+    dispatch(startReading(book.key));
+  };
+
+  const handleMarkFinished = () => {
+    dispatch(markAsFinished(book.key));
+    dispatch(updateReadingStreak());
+  };
+
+  const handleMarkUnread = () => {
+    dispatch(markAsUnread(book.key));
   };
 
   return (
     <article className="book-card">
       <img
-        className="book-cover"
         src={cover}
         alt={book.title}
-        onClick={handleNavigate}
+        className="book-cover"
       />
 
       <div className="book-content">
+    
         <h3 onClick={handleNavigate}>
           {book.title}
         </h3>
@@ -48,6 +64,42 @@ function BookCard({
           <p className="rating">
             ⭐ Rating: {book.rating}
           </p>
+        )}
+
+        {/* Reading Status - Only My Library */}
+        {buttonText === "Remove" && (
+          <div className="reading-status">
+            <p>
+              Status: <strong>{book.status}</strong>
+            </p>
+
+            {book.status === "unread" && (
+              <button
+                className="status-btn reading"
+                onClick={handleStartReading}
+              >
+                📖 Start Reading
+              </button>
+            )}
+
+            {book.status === "reading" && (
+              <button
+                className="status-btn finished"
+                onClick={handleMarkFinished}
+              >
+                ✅ Mark as Finished
+              </button>
+            )}
+
+            {book.status === "finished" && (
+              <button
+                className="status-btn unread"
+                onClick={handleMarkUnread}
+              >
+                ↩️ Mark as Unread
+              </button>
+            )}
+          </div>
         )}
 
         <button

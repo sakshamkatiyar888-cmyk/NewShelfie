@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  myBooks:JSON.parse(
-    localStorage.getItem("myBooks")
-  ) || [],
+  myBooks: JSON.parse(localStorage.getItem("myBooks")) || [],
+};
+
+const saveToLocalStorage = (books) => {
+  localStorage.setItem("myBooks", JSON.stringify(books));
 };
 
 const librarySlice = createSlice({
@@ -16,12 +18,13 @@ const librarySlice = createSlice({
       );
 
       if (!alreadyExists) {
-        state.myBooks.push(action.payload);
+        const newBook = {
+          ...action.payload,
+          status: action.payload.status || "unread",
+        };
 
-        localStorage.setItem(
-            "myBooks",
-            JSON.stringify(state.myBooks)
-        );
+        state.myBooks.push(newBook);
+        saveToLocalStorage(state.myBooks);
       }
     },
 
@@ -29,15 +32,51 @@ const librarySlice = createSlice({
       state.myBooks = state.myBooks.filter(
         (book) => book.key !== action.payload
       );
-      localStorage.setItem(
-        "myBooks",
-        JSON.stringify(state.myBooks)
+
+      saveToLocalStorage(state.myBooks);
+    },
+
+    startReading: (state, action) => {
+      const book = state.myBooks.find(
+        (book) => book.key === action.payload
       );
+
+      if (book) {
+        book.status = "reading";
+        saveToLocalStorage(state.myBooks);
+      }
+    },
+
+    markAsFinished: (state, action) => {
+      const book = state.myBooks.find(
+        (book) => book.key === action.payload
+      );
+
+      if (book) {
+        book.status = "finished";
+        saveToLocalStorage(state.myBooks);
+      }
+    },
+
+    markAsUnread: (state, action) => {
+      const book = state.myBooks.find(
+        (book) => book.key === action.payload
+      );
+
+      if (book) {
+        book.status = "unread";
+        saveToLocalStorage(state.myBooks);
+      }
     },
   },
 });
 
-export const { addBook, removeBook } =
-  librarySlice.actions;
+export const {
+  addBook,
+  removeBook,
+  startReading,
+  markAsFinished,
+  markAsUnread,
+} = librarySlice.actions;
 
 export default librarySlice.reducer;

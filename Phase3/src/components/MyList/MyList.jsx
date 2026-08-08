@@ -7,9 +7,12 @@ import "./MyList.css";
 function MyList() {
   const dispatch = useDispatch();
 
-const myBooks = useSelector(
-  (state) => state.library.myBooks
-);
+  const myBooks = useSelector(
+    (state) => state.library.myBooks
+  );
+  const streak = useSelector(
+    (state) => state.streak.count
+  );
 
   const averageRating = useMemo(() => {
     if (myBooks.length === 0) return 0;
@@ -23,17 +26,28 @@ const myBooks = useSelector(
   }, [myBooks]);
 
   return (
-    <section 
-    id="my-library"
-    className="my-list">
-      <div className="my-list-header">
-        <h2>❤️ My Library</h2>
+    <section
+      id="my-library"
+      className="my-list">
+      <div className="stats">
+        <span>Total Books: {myBooks.length}</span>
 
-        <div className="stats">
-          <span>Total Books: {myBooks.length}</span>
-          <span>⭐ Average Rating: {averageRating}</span>
-        </div>
+        <span>⭐ Average Rating: {averageRating}</span>
+
+        <span>
+          ✅ Finished:{" "}
+          {
+            myBooks.filter(
+              (book) => book.status === "finished"
+            ).length
+          }
+        </span>
+
+        <span>
+          🔥 Reading Streak: {streak} day(s)
+        </span>
       </div>
+
 
       {myBooks.length === 0 ? (
         <div className="empty-state">

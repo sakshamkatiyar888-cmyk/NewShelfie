@@ -1,0 +1,35 @@
+.filters {
+  width: min(600px, 90%);
+  margin: 1rem auto 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.filters button {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filters button:hover {
+  transform: translateY(-1px);
+}
+.filters button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

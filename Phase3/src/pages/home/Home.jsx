@@ -16,7 +16,7 @@ import useDebounce from "../../hooks/useDebounce";
 
 import { clearSearch } from "../../redux/slices/searchSlice";
 import { fetchBooks } from "../../redux/actions/searchActions";
-
+import Filters from "../../components/Filters/Filters";
 function Home() {
   const dispatch = useDispatch();
 
@@ -25,7 +25,9 @@ function Home() {
   const books = useSelector(
     (state) => state.search.books
   );
-
+  const { subject, language, sort } = useSelector(
+    (state) => state.filter
+  );
   const loading = useSelector(
     (state) => state.search.loading
   );
@@ -34,30 +36,39 @@ function Home() {
     (state) => state.search.error
   );
 
-const debouncedQuery = useDebounce(query, 500);
+  const debouncedQuery = useDebounce(query, 500);
 
-const handleSearch = useCallback((value) => {
-  setQuery(value);
-}, []);
+  const handleSearch = useCallback((value) => {
+    setQuery(value);
+  }, []);
 
-useEffect(() => {
-  if (!debouncedQuery.trim()) {
-    dispatch(clearSearch());
-    return;
-  }
+  useEffect(() => {
+    if (!debouncedQuery.trim()) {
+      dispatch(clearSearch());
+      return;
+    }
 
-  const promise = dispatch(fetchBooks(debouncedQuery));
+    const promise = dispatch(
+      fetchBooks({
+        query: debouncedQuery,
+        subject,
+        language,
+        sort,
+      })
+    );
 
-  return () => {
-    promise.abort();
-  };
-}, [debouncedQuery, dispatch]);
+    return () => {
+      promise.abort();
+    };
+  }, [debouncedQuery, subject, language, sort, dispatch]);
 
   return (
     <>
       <Hero />
 
       <SearchBar onSearch={handleSearch} />
+
+      <Filters />
 
       {debouncedQuery && !loading && !error && (
         <div className="results-info">
