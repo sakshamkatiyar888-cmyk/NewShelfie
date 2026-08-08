@@ -1,0 +1,11 @@
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-color);
+}
+
+.empty-state p {
+  margin-top: 0.5rem;
+  color: var(--secondary-text);
+  font-size: 1rem;
+}

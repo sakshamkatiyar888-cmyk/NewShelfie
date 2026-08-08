@@ -1,0 +1,53 @@
+{
+  "notes": [
+    {
+      "bookId": "/works/OL2010879W",
+      "note": "jtkkwjaetm",
+      "rating": 3,
+      "createdAt": "2026-08-08T09:31:33.443Z",
+      "id": 1
+    },
+    {
+      "bookId": "/works/OL78561W",
+      "note": "bvoidslglj;fw",
+      "rating": 5,
+      "createdAt": "2026-08-08T09:38:34.805Z",
+      "id": 2
+    },
+    {
+      "bookId": "/works/OL78561W",
+      "note": "ui346qtaert",
+      "rating": 5,
+      "createdAt": "2026-08-08T10:29:16.359Z",
+      "id": 3
+    },
+    {
+      "bookId": "/works/OL15090503W",
+      "note": "e65rj7",
+      "rating": 5,
+      "createdAt": "2026-08-08T10:30:04.864Z",
+      "id": 4
+    },
+    {
+      "bookId": "/works/OL10429740W",
+      "note": "gjrtetgghn",
+      "rating": 5,
+      "createdAt": "2026-08-08T10:30:55.667Z",
+      "id": 5
+    },
+    {
+      "bookId": "/works/OL2940690W",
+      "note": "fgtyjd",
+      "rating": 5,
+      "createdAt": "2026-08-08T10:33:48.991Z",
+      "id": 6
+    },
+    {
+      "bookId": "/works/OL2940690W",
+      "note": "its a very good book",
+      "rating": 5,
+      "createdAt": "2026-08-08T10:34:19.953Z",
+      "id": 7
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import apiClient from "../../api/apiClient";
 
 export const fetchBooks = createAsyncThunk(
   "search/fetchBooks",
@@ -20,35 +21,29 @@ export const fetchBooks = createAsyncThunk(
         };
       }
 
-      const params = new URLSearchParams();
-
-      params.set("q", query);
+      const params = {
+        q: query,
+      };
 
       if (subject !== "all") {
-        params.set("subject", subject);
+        params.subject = subject;
       }
 
       if (language !== "all") {
-        params.set("language", language);
+        params.language = language;
       }
 
       if (sort !== "relevance") {
-        params.set("sort", sort);
+        params.sort = sort;
       }
 
-      const response = await fetch(
-        `https://openlibrary.org/search.json?${params.toString()}`,
-        { signal }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch books.");
-      }
-
-      const data = await response.json();
+      const response = await apiClient.get("/search.json", {
+        params,
+        signal,
+      });
 
       return {
-        books: data.docs,
+        books: response.data.docs,
         cacheKey,
         fromCache: false,
       };

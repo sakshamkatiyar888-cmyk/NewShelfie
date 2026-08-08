@@ -1,3 +1,4 @@
+import BookNotes from "../../components/BookNotes/BookNotes";
 import { useEffect, useState } from "react";
 import {
   useLocation,
@@ -39,9 +40,7 @@ function BookDetails() {
         );
 
         if (!response.ok) {
-          throw new Error(
-            "Failed to fetch book details."
-          );
+          throw new Error("Failed to fetch book details.");
         }
 
         const data = await response.json();
@@ -66,55 +65,42 @@ function BookDetails() {
   }
 
   return (
-   <div className="book-details">
-  <button
-    className="back-btn"
-    onClick={() => navigate(-1)}
-  >
-    ← Back
-  </button>
+    <main className="book-details">
+      {searchBook?.cover_i && (
+        <img
+          className="details-cover"
+          src={`https://covers.openlibrary.org/b/id/${searchBook.cover_i}-L.jpg`}
+          alt={book.title}
+        />
+      )}
 
-  <div className="details-content">
+      <div className="details-info">
+        <h1>{book.title}</h1>
 
-    {searchBook?.cover_i && (
-      <img
-        className="details-cover"
-        src={`https://covers.openlibrary.org/b/id/${searchBook.cover_i}-L.jpg`}
-        alt={book.title}
-      />
-    )}
+        <p>
+          <strong>Author:</strong>{" "}
+          {searchBook?.author_name?.[0] || "Unknown Author"}
+        </p>
 
-    <div className="details-info">
-      <h1>{book.title}</h1>
+        <p>
+          <strong>First Publish:</strong>{" "}
+          {searchBook?.first_publish_year ||
+            book.first_publish_date ||
+            "Unknown"}
+        </p>
 
-      <p>
-        <strong>Author:</strong>{" "}
-        {searchBook?.author_name?.[0] ||
-          "Unknown Author"}
-      </p>
+        <h3>Description</h3>
 
-      <p>
-        <strong>First Publish:</strong>{" "}
-        {searchBook?.first_publish_year ||
-          book.first_publish_date ||
-          "Unknown"}
-      </p>
+        <p className="book-description">
+          {description || "No description available."}
+        </p>
 
-      <h3>Description</h3>
+        {book.subjects && (
+          <>
+            <h3>Subjects</h3>
 
-      <p className="book-description">
-        {description ||
-          "No description available."}
-      </p>
-
-      {book.subjects && (
-        <>
-          <h3>Subjects</h3>
-
-          <div className="subjects">
-            {book.subjects
-              .slice(0, 10)
-              .map((subject) => (
+            <div className="subjects">
+              {book.subjects.slice(0, 10).map((subject) => (
                 <span
                   key={subject}
                   className="subject-tag"
@@ -122,13 +108,13 @@ function BookDetails() {
                   {subject}
                 </span>
               ))}
-          </div>
-        </>
-      )}
-    </div>
+            </div>
+          </>
+        )}
+      </div>
 
-  </div>
-</div>
+      <BookNotes bookId={bookKey} />
+    </main>
   );
 }
 
