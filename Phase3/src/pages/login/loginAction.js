@@ -13,6 +13,11 @@ export async function loginAction({ request }) {
       error: "Username is required.",
     };
   }
+  if (username.trim().length < 3) {
+    return {
+      error: "Username must be at least 3 characters long.",
+    };
+  }
 
   const fakeToken = `fake-token-${Date.now()}`;
 

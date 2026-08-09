@@ -2,7 +2,6 @@ import BookNotes from "../../components/BookNotes/BookNotes";
 import {
   useLoaderData,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 
 import "./BookDetails.css";
@@ -10,7 +9,6 @@ import "./BookDetails.css";
 function BookDetails() {
   const book = useLoaderData();
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   const searchBook = location.state?.book;

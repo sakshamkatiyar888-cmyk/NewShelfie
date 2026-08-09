@@ -33,6 +33,9 @@ function Login() {
               type="text"
               placeholder="Enter your username"
               autoComplete="username"
+              required 
+              minLength={3}
+
             />
           </div>
 
