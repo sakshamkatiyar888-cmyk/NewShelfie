@@ -13,6 +13,7 @@ import Spinner from "../components/Spinner/Spinner";
 import { bookLoader } from "../pages/book-details/bookLoader";
 import ErrorState from "../components/ErrorState/ErrorState";
 import MyList from "../components/MyList/MyList";
+import MainLayout from "../layouts/MainLayout";
 const Home = lazy(() =>
   import("../pages/home/Home")
 );
@@ -27,18 +28,6 @@ const NotFound = lazy(() =>
 const Login = lazy(() =>
   import("../pages/login/Login")
 );
-
-function MainLayout() {
-  return (
-    <>
-      <Header />
-
-      <main>
-        <Outlet />
-      </main>
-    </>
-  );
-}
 
 const router = createBrowserRouter([
   {

@@ -7,6 +7,7 @@ export async function loginAction({ request }) {
   const formData = await request.formData();
 
   const username = formData.get("username");
+  const from = formData.get("from") || "/library";  
 
   if (!username || !username.trim()) {
     return {
@@ -23,5 +24,5 @@ export async function loginAction({ request }) {
 
   store.dispatch(login(fakeToken));
 
-  return redirect("/library");
+  return redirect(from);
 }

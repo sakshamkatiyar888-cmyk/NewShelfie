@@ -27,7 +27,6 @@ function MyList() {
 
   return (
     <section
-      id="my-library"
       className="my-list">
       <div className="stats">
         <span>Total Books: {myBooks.length}</span>

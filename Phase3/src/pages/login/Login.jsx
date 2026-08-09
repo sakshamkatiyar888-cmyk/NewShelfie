@@ -1,9 +1,10 @@
-import { Form, useActionData } from "react-router-dom";
+import { Form, useActionData,useLocation } from "react-router-dom";
 
 import "./Login.css";
 
 function Login() {
   const actionData = useActionData();
+    const location = useLocation();
 
   return (
     <main className="login-page">
@@ -22,6 +23,11 @@ function Login() {
         </div>
 
         <Form method="post" className="login-form">
+            <input
+              type="hidden"
+              name="from"
+              value={location.state?.from || "/library"}
+            />
           <div className="form-group">
             <label htmlFor="username">
               Username
