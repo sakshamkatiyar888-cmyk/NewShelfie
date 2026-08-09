@@ -1,19 +1,19 @@
-import { loginAction } from "../pages/login/loginAction";
-import ProtectedRoute from "./ProtectedRoute";
 import { lazy, Suspense } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  Outlet,
 } from "react-router-dom";
 
-import Header from "../components/Header/Header";
 import Spinner from "../components/Spinner/Spinner";
-
-import { bookLoader } from "../pages/book-details/bookLoader";
 import ErrorState from "../components/ErrorState/ErrorState";
 import MyList from "../components/MyList/MyList";
+
 import MainLayout from "../layouts/MainLayout";
+import ProtectedRoute from "./ProtectedRoute";
+
+import { bookLoader } from "../pages/book-details/bookLoader";
+import { loginAction } from "../pages/login/loginAction";
+
 const Home = lazy(() =>
   import("../pages/home/Home")
 );
@@ -25,6 +25,7 @@ const BookDetails = lazy(() =>
 const NotFound = lazy(() =>
   import("../pages/not-found/NotFound")
 );
+
 const Login = lazy(() =>
   import("../pages/login/Login")
 );
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+
       {
         path: "/login",
         action: loginAction,
@@ -52,15 +54,14 @@ const router = createBrowserRouter([
         ),
       },
 
-
       {
-  path: "/library",
-  element: (
-    <ProtectedRoute>
-        <MyList />  
-    </ProtectedRoute>
-  ),
-},
+        path: "/library",
+        element: (
+          <ProtectedRoute>
+            <MyList />
+          </ProtectedRoute>
+        ),
+      },
 
       {
         path: "/book/:id",
