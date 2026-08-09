@@ -1,71 +1,30 @@
 import BookNotes from "../../components/BookNotes/BookNotes";
-import { useEffect, useState } from "react";
 import {
+  useLoaderData,
   useLocation,
   useNavigate,
-  useParams,
 } from "react-router-dom";
-
-import Spinner from "../../components/Spinner/Spinner";
-import ErrorState from "../../components/ErrorState/ErrorState";
 
 import "./BookDetails.css";
 
 function BookDetails() {
-  const { id } = useParams();
+  const book = useLoaderData();
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const searchBook = location.state?.book;
 
-  const bookKey = decodeURIComponent(id);
-
-  const [book, setBook] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const bookKey = book.key;
 
   const description =
     typeof book?.description === "string"
       ? book.description
       : book?.description?.value;
 
-  useEffect(() => {
-    async function fetchBookDetails() {
-      try {
-        setLoading(true);
-        setError("");
-
-        const response = await fetch(
-          `https://openlibrary.org${bookKey}.json`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch book details.");
-        }
-
-        const data = await response.json();
-
-        setBook(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchBookDetails();
-  }, [bookKey]);
-
-  if (loading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <ErrorState message={error} />;
-  }
-
   return (
     <main className="book-details">
+
       {searchBook?.cover_i && (
         <img
           className="details-cover"
@@ -114,6 +73,7 @@ function BookDetails() {
       </div>
 
       <BookNotes bookId={bookKey} />
+
     </main>
   );
 }

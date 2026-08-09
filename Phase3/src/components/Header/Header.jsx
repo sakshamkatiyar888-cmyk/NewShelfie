@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ThemeContext from "../../context/ThemeContext";
+
+import { logout } from "../../redux/slices/authSlice";
 
 import "./Header.css";
 
@@ -10,26 +12,28 @@ function Header() {
   const { theme, toggleTheme } =
     useContext(ThemeContext);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const myBooks = useSelector(
     (state) => state.library.myBooks
   );
 
-  const navigate = useNavigate();
+  const isAuthenticated = useSelector(
+    (state) => state.auth.isAuthenticated
+  );
 
   function handleLogoClick() {
     navigate("/");
   }
 
   function handleMyLibraryClick() {
-    navigate("/");
+    navigate("/library");
+  }
 
-    setTimeout(() => {
-      document
-        .getElementById("my-library")
-        ?.scrollIntoView({
-          behavior: "smooth",
-        });
-    }, 100);
+  function handleLogout() {
+    dispatch(logout());
+    navigate("/login", { replace: true });
   }
 
   return (
@@ -38,7 +42,7 @@ function Header() {
         className="logo"
         onClick={handleLogoClick}
       >
-        📚
+        <span>📚</span>
 
         <h1>Shelfie</h1>
       </div>
@@ -50,6 +54,15 @@ function Header() {
         >
           ❤️ My Library ({myBooks.length})
         </button>
+
+        {isAuthenticated && (
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            🚪 Logout
+          </button>
+        )}
 
         <button
           className="theme-btn"

@@ -1,13 +1,18 @@
+import { loginAction } from "../pages/login/loginAction";
+import ProtectedRoute from "./ProtectedRoute";
 import { lazy, Suspense } from "react";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
 } from "react-router-dom";
 
 import Header from "../components/Header/Header";
 import Spinner from "../components/Spinner/Spinner";
 
+import { bookLoader } from "../pages/book-details/bookLoader";
+import ErrorState from "../components/ErrorState/ErrorState";
+import MyList from "../components/MyList/MyList";
 const Home = lazy(() =>
   import("../pages/home/Home")
 );
@@ -19,32 +24,80 @@ const BookDetails = lazy(() =>
 const NotFound = lazy(() =>
   import("../pages/not-found/NotFound")
 );
+const Login = lazy(() =>
+  import("../pages/login/Login")
+);
 
-function AppRouter() {
+function MainLayout() {
   return (
-    <BrowserRouter>
+    <>
       <Header />
 
-      <Suspense fallback={<Spinner />}>
-        <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-
-          <Route
-            path="/book/:id"
-            element={<BookDetails />}
-          />
-
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+      <main>
+        <Outlet />
+      </main>
+    </>
   );
+}
+
+const router = createBrowserRouter([
+  {
+    element: <MainLayout />,
+
+    children: [
+      {
+        path: "/",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Home />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/login",
+        action: loginAction,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Login />
+          </Suspense>
+        ),
+      },
+
+
+      {
+  path: "/library",
+  element: (
+    <ProtectedRoute>
+        <MyList />  
+    </ProtectedRoute>
+  ),
+},
+
+      {
+        path: "/book/:id",
+        loader: bookLoader,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <BookDetails />
+          </Suspense>
+        ),
+        errorElement: <ErrorState />,
+      },
+
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <NotFound />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+]);
+
+function AppRouter() {
+  return <RouterProvider router={router} />;
 }
 
 export default AppRouter;

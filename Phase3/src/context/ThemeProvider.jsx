@@ -7,7 +7,7 @@ import {
 
 import ThemeContext from "./ThemeContext";
 import { themeReducer } from "./reducers/themeReducer";
-import { THEME_ACTIONS } from "./reducers/themeActions";
+
 
 const initialTheme =
   localStorage.getItem("theme") || "light";
@@ -31,7 +31,7 @@ function ThemeProvider({ children }) {
 
   const toggleTheme = useCallback(() => {
     dispatch({
-      type: THEME_ACTIONS.TOGGLE_THEME,
+      type: "TOGGLE_THEME",
     });
   }, []);
 

@@ -6,7 +6,6 @@ import "./Home.css";
 import Hero from "../../components/Hero/Hero";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BookList from "../../components/BookList/BookList";
-import MyList from "../../components/MyList/MyList";
 
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorState from "../../components/ErrorState/ErrorState";
@@ -87,7 +86,6 @@ function Home() {
         <BookList books={books} />
       )}
 
-      <MyList />
     </>
   );
 }
