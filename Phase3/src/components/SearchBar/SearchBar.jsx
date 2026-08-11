@@ -1,10 +1,10 @@
 import { FiSearch } from "react-icons/fi";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState,useTransition } from "react";
 import "./SearchBar.css";
 
 function SearchBar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [isPending, startTransition] = useTransition();
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -15,8 +15,10 @@ function SearchBar({ onSearch }) {
     const value = event.target.value;
 
     setSearchQuery(value);
+    startTransition(() => {
     onSearch(value);
-  };
+  });
+}
 
   return (
    <div className="search-container">

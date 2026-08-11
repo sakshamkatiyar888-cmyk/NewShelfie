@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState,useDeferredValue } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./Home.css";
@@ -20,6 +20,7 @@ function Home() {
   const dispatch = useDispatch();
 
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
 
   const books = useSelector(
     (state) => state.search.books
@@ -69,7 +70,7 @@ function Home() {
 
       <Filters />
 
-      {debouncedQuery && !loading && !error && (
+      {deferredQuery && !loading && !error && (
         <div className="results-info">
           📚 Found <strong>{books.length}</strong>{" "}
           {books.length === 1 ? "Book" : "Books"}
@@ -80,7 +81,7 @@ function Home() {
         <Spinner />
       ) : error ? (
         <ErrorState message={error} />
-      ) : books.length === 0 && debouncedQuery ? (
+      ) : books.length === 0 && deferredQuery ? (
         <EmptyState />
       ) : (
         <BookList books={books} />

@@ -12,7 +12,7 @@ import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 import { bookLoader } from "../pages/book-details/bookLoader";
-import { loginAction } from "../pages/login/loginAction";
+
 
 const Home = lazy(() =>
   import("../pages/home/Home")
@@ -46,7 +46,6 @@ const router = createBrowserRouter([
 
       {
         path: "/login",
-        action: loginAction,
         element: (
           <Suspense fallback={<Spinner />}>
             <Login />

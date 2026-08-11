@@ -1,3 +1,4 @@
+import {use} from "react";
 import BookNotes from "../../components/BookNotes/BookNotes";
 import {
   useLoaderData,
@@ -7,7 +8,8 @@ import {
 import "./BookDetails.css";
 
 function BookDetails() {
-  const book = useLoaderData();
+  const { bookPromise } = useLoaderData();
+  const book = use(bookPromise);
 
   const location = useLocation();
 

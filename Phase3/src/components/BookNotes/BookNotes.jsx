@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useOptimistic,
+  useState,
+  useTransition,
+} from "react";
 
 import {
   addNote,
@@ -11,6 +16,16 @@ import "./BookNotes.css";
 
 function BookNotes({ bookId }) {
   const [notes, setNotes] = useState([]);
+
+  const [optimisticNotes, addOptimisticNote] = useOptimistic(
+    notes,
+    (currentNotes, optimisticNote) => [
+      ...currentNotes,
+      optimisticNote,
+    ]
+  );
+
+  const [isPending, startTransition] = useTransition();
 
   const [note, setNote] = useState("");
   const [rating, setRating] = useState(5);
@@ -100,43 +115,28 @@ function BookNotes({ bookId }) {
       id: `temp-${Date.now()}`,
     };
 
-    // 1. Immediately show note in UI
-    setNotes((currentNotes) => [
-      ...currentNotes,
-      optimisticNote,
-    ]);
-
     setNote("");
     setRating(5);
 
-    try {
-      setSaving(true);
+    startTransition(async () => {
+      addOptimisticNote(optimisticNote);
 
-      // 2. Send actual request
-      const savedNote = await addNote(noteData);
+      try {
+        setSaving(true);
 
-      // 3. Replace temporary note with server note
-      setNotes((currentNotes) =>
-        currentNotes.map((item) =>
-          item.id === optimisticNote.id
-            ? savedNote
-            : item
-        )
-      );
-    } catch (error) {
-      // 4. Rollback optimistic note
-      setNotes((currentNotes) =>
-        currentNotes.filter(
-          (item) => item.id !== optimisticNote.id
-        )
-      );
+        await addNote(noteData);
 
-      setError(
-        error.message || "Failed to add note."
-      );
-    } finally {
-      setSaving(false);
-    }
+        const data = await getNotesByBook(bookId);
+
+        setNotes(data);
+      } catch (error) {
+        setError(
+          error.message || "Failed to add note."
+        );
+      } finally {
+        setSaving(false);
+      }
+    });
   }
 
   function handleEdit(item) {
@@ -184,7 +184,7 @@ function BookNotes({ bookId }) {
           }
           placeholder="Write your note about this book..."
           rows="4"
-          disabled={saving}
+          disabled={saving || isPending}
         />
 
         <select
@@ -192,7 +192,7 @@ function BookNotes({ bookId }) {
           onChange={(event) =>
             setRating(event.target.value)
           }
-          disabled={saving}
+          disabled={saving || isPending}
         >
           <option value="5">5 ⭐</option>
           <option value="4">4 ⭐</option>
@@ -204,9 +204,9 @@ function BookNotes({ bookId }) {
         <div className="note-actions">
           <button
             type="submit"
-            disabled={saving}
+            disabled={saving || isPending}
           >
-            {saving
+            {saving || isPending
               ? "Saving..."
               : editingId
               ? "Update Note"
@@ -217,7 +217,7 @@ function BookNotes({ bookId }) {
             <button
               type="button"
               onClick={handleCancelEdit}
-              disabled={saving}
+              disabled={saving || isPending}
             >
               Cancel
             </button>
@@ -235,14 +235,14 @@ function BookNotes({ bookId }) {
         </p>
       )}
 
-      {!loading && notes.length === 0 && (
+      {!loading && optimisticNotes.length === 0 && (
         <p className="no-notes">
           No notes added yet.
         </p>
       )}
 
       <div className="notes-list">
-        {notes.map((item) => (
+        {optimisticNotes.map((item) => (
           <article
             className="note-card"
             key={item.id}
@@ -259,7 +259,11 @@ function BookNotes({ bookId }) {
                 onClick={() =>
                   handleEdit(item)
                 }
-                disabled={saving}
+                disabled={
+                  saving ||
+                  isPending ||
+                  String(item.id).startsWith("temp-")
+                }
               >
                 Edit
               </button>
@@ -269,7 +273,11 @@ function BookNotes({ bookId }) {
                 onClick={() =>
                   handleDelete(item.id)
                 }
-                disabled={saving}
+                disabled={
+                  saving ||
+                  isPending ||
+                  String(item.id).startsWith("temp-")
+                }
               >
                 Delete
               </button>

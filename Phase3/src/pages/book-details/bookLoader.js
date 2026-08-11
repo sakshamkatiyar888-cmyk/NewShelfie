@@ -1,4 +1,4 @@
-export async function bookLoader({ params }) {
+export function bookLoader({ params }) {
   const bookKey = decodeURIComponent(params.id);
 
   if (!bookKey.startsWith("/works/")) {
@@ -8,16 +8,20 @@ export async function bookLoader({ params }) {
     });
   }
 
-  const response = await fetch(
+  const bookPromise = fetch(
     `https://openlibrary.org${bookKey}.json`
-  );
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Response("Book not found", {
+        status: response.status,
+        statusText: "Book not found",
+      });
+    }
 
-  if (!response.ok) {
-    throw new Response("Book not found", {
-      status: response.status,
-      statusText: "Book not found",
-    });
-  }
+    return response.json();
+  });
 
-  return response.json();
+  return {
+    bookPromise,
+  };
 }
