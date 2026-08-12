@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const notesClient = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "https://newshelfie-api.onrender.com",
   timeout: 10000,
 });
 
