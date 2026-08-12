@@ -17,3 +17,13 @@
   line-height: 1.8;
   color: #6b7280;
 }
+
+/* Dark mode */
+
+html.dark .hero h2 {
+  color: #f8fafc;
+}
+
+html.dark .hero p {
+  color: #94a3b8;
+}

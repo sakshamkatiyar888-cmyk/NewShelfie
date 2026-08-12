@@ -59,8 +59,38 @@ function BookNotes({ bookId }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!note.trim()) {
+    // =========================
+    // FORM VALIDATION
+    // =========================
+
+    const trimmedNote = note.trim();
+    const numericRating = Number(rating);
+
+    if (!trimmedNote) {
       setError("Please write a note first.");
+      return;
+    }
+
+    if (trimmedNote.length < 3) {
+      setError(
+        "Note must be at least 3 characters long."
+      );
+      return;
+    }
+
+    if (trimmedNote.length > 500) {
+      setError(
+        "Note must not exceed 500 characters."
+      );
+      return;
+    }
+
+    if (
+      !Number.isInteger(numericRating) ||
+      numericRating < 1 ||
+      numericRating > 5
+    ) {
+      setError("Rating must be between 1 and 5.");
       return;
     }
 
@@ -68,8 +98,8 @@ function BookNotes({ bookId }) {
 
     const noteData = {
       bookId,
-      note: note.trim(),
-      rating: Number(rating),
+      note: trimmedNote,
+      rating: numericRating,
       createdAt: new Date().toISOString(),
     };
 
@@ -131,7 +161,8 @@ function BookNotes({ bookId }) {
         setNotes(data);
       } catch (error) {
         setError(
-          error.message || "Failed to add note."
+          error.message ||
+            "Failed to add note."
         );
       } finally {
         setSaving(false);
@@ -184,6 +215,7 @@ function BookNotes({ bookId }) {
           }
           placeholder="Write your note about this book..."
           rows="4"
+          maxLength={500}
           disabled={saving || isPending}
         />
 
@@ -235,11 +267,12 @@ function BookNotes({ bookId }) {
         </p>
       )}
 
-      {!loading && optimisticNotes.length === 0 && (
-        <p className="no-notes">
-          No notes added yet.
-        </p>
-      )}
+      {!loading &&
+        optimisticNotes.length === 0 && (
+          <p className="no-notes">
+            No notes added yet.
+          </p>
+        )}
 
       <div className="notes-list">
         {optimisticNotes.map((item) => (
@@ -262,7 +295,9 @@ function BookNotes({ bookId }) {
                 disabled={
                   saving ||
                   isPending ||
-                  String(item.id).startsWith("temp-")
+                  String(item.id).startsWith(
+                    "temp-"
+                  )
                 }
               >
                 Edit
@@ -276,7 +311,9 @@ function BookNotes({ bookId }) {
                 disabled={
                   saving ||
                   isPending ||
-                  String(item.id).startsWith("temp-")
+                  String(item.id).startsWith(
+                    "temp-"
+                  )
                 }
               >
                 Delete

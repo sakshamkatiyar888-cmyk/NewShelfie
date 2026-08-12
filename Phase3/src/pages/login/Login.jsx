@@ -1,4 +1,4 @@
-import { useActionState } from "react";
+import { useActionState,useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -59,9 +59,13 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
   if (state?.success) {
-    navigate(state.redirectTo, { replace: true });
+    navigate(state.redirectTo, {
+      replace: true,
+    });
   }
+}, [state, navigate]);
 
   return (
     <main className="login-page">
